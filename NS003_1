@@ -1,0 +1,84 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+void math(string, int);
+void coutans(stack<int>);
+
+int main() {
+    string formula;
+    int n;
+    cout << "輸入後序算式(僅支援個位數):";
+    cin >> formula;
+    n = formula.size();
+    math(formula, n);
+}
+
+
+void math(string f, int n) {
+    stack<int> ans;
+
+    for(int i = 0; i < n; i++) {
+        int a, b, c;
+        switch(f[i]) {
+            case '+':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                c = a + b;
+                ans.push(c);
+                break;
+            case '-':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                c = b - a;
+                ans.push(c);
+                break;
+            case '*':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                c = b * a;
+                ans.push(c);
+                break;
+            case '/':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                if(a == 0) {
+                    cout << b << "無法除以0";
+                    break;
+                }
+                c = b / a;
+                ans.push(c);
+                break;
+            case '%':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                if(a == 0) {
+                    cout << "無法求出" << b << "除以0的餘數";
+                    break;
+                }
+                c = b % a;
+                ans.push(c);
+                break;
+            default:
+                ans.push(f[i] - '0');
+        }
+    }
+    
+    coutans(ans);
+}
+
+
+void coutans(stack<int> a) {
+    if(! a.empty()) {
+        cout <<"答案是:" << a.top();
+    }
+}
