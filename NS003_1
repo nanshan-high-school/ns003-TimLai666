@@ -51,6 +51,7 @@ void math(string f, int n) {
                 ans.pop();
                 if(a == 0) {
                     cout << b << "無法除以0";
+                    i = n;
                     break;
                 }
                 c = b / a;
@@ -63,6 +64,7 @@ void math(string f, int n) {
                 ans.pop();
                 if(a == 0) {
                     cout << "無法求出" << b << "除以0的餘數";
+                    i = n;
                     break;
                 }
                 c = b % a;
