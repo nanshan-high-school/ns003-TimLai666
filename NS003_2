@@ -1,0 +1,100 @@
+#include <iostream>
+#include <stack>
+#include <queue>
+using namespace std;
+void math(int, queue<char>);
+void coutans(stack<int>);
+
+int main() {
+    int n;
+    queue<char> formula;
+    cout << "輸入算式長度:";
+    cin >> n;
+    cout << "輸入後序算式(僅支援個位數)(用空格隔開):";
+    for(int i = 0; i < n; i++) {
+        char save;
+        cin >> save;
+        formula.push(save);
+    }
+    math(n, formula);
+}
+
+
+void math(int n, queue<char> formula) {
+    stack<int> ans;
+
+    for(int i = 0; i < n; i++) {
+        int a, b, c;
+        switch(formula.front()) {
+            case '+':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                c = a + b;
+                ans.push(c);
+                formula.pop();
+                break;
+            case '-':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                c = b - a;
+                ans.push(c);
+                formula.pop();
+                break;
+            case '*':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                c = b * a;
+                ans.push(c);
+                formula.pop();
+                break;
+            case '/':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                if(a == 0) {
+                    cout << b << "無法除以0";
+                    formula.pop();
+                    i = n;
+                    break;
+                }
+                c = b / a;
+                ans.push(c);
+                formula.pop();
+                break;
+            case '%':
+                a = ans.top();
+                ans.pop();
+                b = ans.top();
+                ans.pop();
+                if(a == 0) {
+                    cout << "無法求出" << b << "除以0的餘數";
+                    formula.pop();
+                    i = n;
+                    break;
+                }
+                c = b % a;
+                ans.push(c);
+                formula.pop();
+                break;
+            default:
+                ans.push(formula.front() - '0');
+                formula.pop();
+        }
+    }
+    
+    coutans(ans);
+}
+
+
+void coutans(stack<int> a) {
+    if(! a.empty()) {
+        cout <<"答案是:" << a.top();
+    }
+}
